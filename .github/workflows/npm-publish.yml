@@ -1,4 +1,4 @@
-name: Publish to NPM on MR Approval
+name: Post Merge to Main
 
 on:
   pull_request:
@@ -6,6 +6,46 @@ on:
       - closed
 
 jobs:
+  lint:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install --include dev
+
+      - name: Lint
+        run: npm run lint
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+  test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install --include dev
+
+      - name: Test
+        run: npm test
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
   publish:
     runs-on: self-hosted
 
@@ -19,7 +59,10 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --include-dev
+
+      - name: Build package
+        run: npm run compile
 
       - name: Publish to NPM
         if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'

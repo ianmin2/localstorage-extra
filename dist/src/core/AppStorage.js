@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const parser_1 = require("./helpers/parser");
 const lodash_1 = __importDefault(require("lodash"));
+const parser_1 = require("./helpers/parser");
 class AppStorage {
     static set(key, value = '') {
         localStorage.setItem(key, (0, parser_1.str)(value));
@@ -19,7 +19,9 @@ class AppStorage {
         return !subKey ? payload : lodash_1.default.get(payload, subKey);
     }
     static del(key, subKey) {
-        !subKey ? localStorage.removeItem(key) : this.update(key, subKey);
+        if (!subKey)
+            return localStorage.removeItem(key);
+        return this.update(key, subKey);
     }
     static reset() {
         localStorage.clear();
@@ -63,7 +65,12 @@ class AppStorage {
             ? filter(allRecords)
             : lodash_1.default.filter(allRecords, filter);
         lodash_1.default.pullAll(allRecords, filteredRecords);
-        this.set(key, allRecords);
+        if (subKey) {
+            this.update(key, subKey, allRecords);
+        }
+        else {
+            this.set(key, allRecords);
+        }
         return true;
     }
     set(key, value) {

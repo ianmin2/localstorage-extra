@@ -2,4 +2,5 @@
 .code
 
 node_modules
-actions_runner
+actions-runner
+dist
