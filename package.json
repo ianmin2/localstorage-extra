@@ -1,9 +1,9 @@
 {
   "name": "localstorage-extra",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A tool to simplify use of structured data in localStorage ",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist"
   ],
