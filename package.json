@@ -1,8 +1,12 @@
 {
   "name": "localstorage-extra",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A tool to simplify use of structured data in localStorage ",
-  "main": "src/index.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "lint": "npx eslint src/**/*.ts",
     "compile": "tsc",
