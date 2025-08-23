@@ -17,6 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// import './core/helpers/ensureLocalStorage';
 const AppStorage_1 = __importDefault(require("./core/AppStorage"));
 exports.default = AppStorage_1.default;
 __exportStar(require("./core/AppStorage"), exports);

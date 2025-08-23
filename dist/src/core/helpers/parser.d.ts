@@ -13,13 +13,6 @@ export declare const str: (input: any) => string;
  */
 export declare const json: (input: any) => any;
 /**
- * Creates a deep clone of an object.
- *
- * @param {any} obj - The object to be cloned.
- * @returns {any} The cloned object.
- */
-export declare const clone: (obj: any) => any;
-/**
  * Validates that a key is a non-empty string.
  *
  * @param {any} key - The key to validate

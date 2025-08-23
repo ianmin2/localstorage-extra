@@ -40,7 +40,9 @@ interface IAppStorage {
 
 class AppStorage implements IAppStorage {
   private static eventListeners: TStorageEventCallback[] = [];
+
   private static keySpecificListeners: { [key: string]: TStorageEventCallback[] } = {};
+
   static set<T = any>(key: string, value: T): void {
     validateKey(key, 'AppStorage.set()');
     localStorage.setItem(key, str(value));
@@ -138,7 +140,7 @@ class AppStorage implements IAppStorage {
       return filter(allRecords).length;
     }
     return allRecords.filter((item: any) => {
-      return Object.keys(filter).every(key => item[key] === filter[key]);
+      return Object.keys(filter).every(filterKey => item[filterKey] === filter[filterKey]);
     }).length;
   }
 
@@ -156,8 +158,8 @@ class AppStorage implements IAppStorage {
     return typeof filter === 'function'
       ? filter(allRecords)
       : allRecords.filter((item: any) => {
-          return Object.keys(filter).every(key => item[key] === filter[key]);
-        });
+        return Object.keys(filter).every(filterKey => item[filterKey] === filter[filterKey]);
+      });
   }
 
   static delWhere<T = any>(
@@ -176,8 +178,8 @@ class AppStorage implements IAppStorage {
       typeof filter === 'function'
         ? filter(allRecords)
         : allRecords.filter((item: any) => {
-            return Object.keys(filter).every(key => item[key] === filter[key]);
-          });
+          return Object.keys(filter).every(filterKey => item[filterKey] === filter[filterKey]);
+        });
 
     pullAll(allRecords, filteredRecords);
 

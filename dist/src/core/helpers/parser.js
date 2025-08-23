@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pullAll = exports.unsetNested = exports.getNested = exports.setNested = exports.validateSubKey = exports.validateKey = exports.clone = exports.json = exports.str = void 0;
+exports.pullAll = exports.unsetNested = exports.getNested = exports.setNested = exports.validateSubKey = exports.validateKey = exports.json = exports.str = void 0;
 /**
  * Conditionally transforms input into a string format.
  *
@@ -31,21 +31,6 @@ const json = (input) => {
     }
 };
 exports.json = json;
-/**
- * Creates a deep clone of an object.
- *
- * @param {any} obj - The object to be cloned.
- * @returns {any} The cloned object.
- */
-const clone = (obj) => {
-    try {
-        return JSON.parse(JSON.stringify(obj));
-    }
-    catch (error) {
-        throw new Error('Clone failed: ' + error.message);
-    }
-};
-exports.clone = clone;
 /**
  * Validates that a key is a non-empty string.
  *

@@ -26,19 +26,6 @@ export const json = (input: any): any => {
   }
 };
 
-/**
- * Creates a deep clone of an object.
- *
- * @param {any} obj - The object to be cloned.
- * @returns {any} The cloned object.
- */
-export const clone = (obj: any): any => {
-  try {
-    return JSON.parse(JSON.stringify(obj));
-  } catch (error: any) {
-    throw new Error('Clone failed: ' + error.message);
-  }
-};
 
 /**
  * Validates that a key is a non-empty string.
