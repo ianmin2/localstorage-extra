@@ -1,26 +1,43 @@
 {
   "name": "localstorage-extra",
-  "version": "0.1.4",
-  "description": "A tool to simplify use of structured data in localStorage ",
+  "version": "1.0.0",
+  "description": "A lightweight, type-safe localStorage utility with advanced querying, filtering, cross-tab communication, and storage monitoring",
+  "keywords": [
+    "localStorage",
+    "storage",
+    "browser",
+    "typescript",
+    "utility",
+    "cross-tab",
+    "events"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ianmin2/localstorage-extra.git"
+  },
+  "homepage": "https://github.com/ianmin2/localstorage-extra#readme",
+  "bugs": {
+    "url": "https://github.com/ianmin2/localstorage-extra/issues"
+  },
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
+    "build": "rm -rf dist && tsc",
     "lint": "npx eslint src/**/*.ts",
+    "lint:fix": "npx eslint src/**/*.ts --fix",
     "compile": "tsc",
-    "test": "jest tests/AppStorage.test.ts"
+    "test": "jest tests/AppStorage.test.ts",
+    "test:watch": "jest tests/AppStorage.test.ts --watch",
+    "prepublishOnly": "npm run build && npm run test && npm run lint"
   },
   "author": "Ian Kamau",
   "license": "ISC",
-  "dependencies": {
-    "lodash": "^4.17.21"
-  },
   "devDependencies": {
     "@types/jest": "^29.5.3",
-    "@types/lodash": "^4.14.197",
-    "@types/lodash-es": "^4.17.8",
+    "@types/lodash": "^4.17.20",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
     "eslint": "^8.46.0",
@@ -29,6 +46,7 @@
     "husky": "^8.0.3",
     "jest": "^29.6.2",
     "localStorage": "^1.0.4",
+    "lodash": "^4.17.21",
     "ts-jest": "^29.1.1"
   }
 }
