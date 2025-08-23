@@ -1,11 +1,11 @@
 name: lint and test
 
-  on:
+on:
     pull_request:
       branches:
         - main
 
-  jobs:
+jobs:
     pre_pull_request_checks:
       runs-on: ubuntu-latest  # Fast GitHub-hosted runner instead of self-hosted
 
