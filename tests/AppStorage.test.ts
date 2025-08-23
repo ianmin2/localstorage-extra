@@ -43,7 +43,6 @@ describe('AppStorage', () => {
 
   // 5
   it('should delete a main key in local storage', () => {
-    const newCategoryType = 'custom-purchases';
     AppStorage.set('todo', apps.todo);
     AppStorage.del('todo');
     const updatedValue = AppStorage.get('todo');
@@ -52,7 +51,6 @@ describe('AppStorage', () => {
 
   // 6
   it('should  delete a subkey in local storage', () => {
-    const newCategoryType = 'custom-purchases';
     AppStorage.set('todo', apps.todo);
     AppStorage.del('todo', '0.categorisation.type');
     const updatedValue = AppStorage.get('todo', '0.categorisation.type');
@@ -61,7 +59,6 @@ describe('AppStorage', () => {
 
   // 7
   it('should reset data in local storage', () => {
-    const newCategoryType = 'custom-purchases';
     AppStorage.set('todo', apps.todo);
     AppStorage.reset();
     const updatedValue = AppStorage.get('todo', '0.categorisation.type');

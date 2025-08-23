@@ -1,6 +1,13 @@
 # localstorage-extra
 
-A powerful utility module that extends the functionality of the browser's localStorage with advanced data manipulation, querying, and filtering capabilities.
+A lightweight, type-safe utility module that extends the browser's localStorage with advanced data manipulation, querying, and filtering capabilities.
+
+**Key Features:**
+- **Zero runtime dependencies** - Only ~9.6KB compiled
+- **Full TypeScript support** - Generics for complete type safety
+- **Input validation** - Comprehensive error handling and validation
+- **Modern API** - Intuitive methods with smart defaults
+- **Flexible usage** - Both static and instance method support
 
 ## Installation
 
@@ -163,11 +170,23 @@ AppStorage.delWhere('users', (users) =>
 
 ## Error Handling
 
-The library provides meaningful error messages for common issues:
+The library provides comprehensive input validation and meaningful error messages:
 
 ```javascript
 try {
-  AppStorage.push('settings', null); // Throws error
+  AppStorage.set('', 'value'); // Invalid key
+} catch (error) {
+  console.log(error.message); // "AppStorage.set(): Key cannot be an empty string"
+}
+
+try {
+  AppStorage.set(null, 'value'); // Invalid key type
+} catch (error) {
+  console.log(error.message); // "AppStorage.set(): Key cannot be null or undefined"
+}
+
+try {
+  AppStorage.push('settings', null); // Invalid value
 } catch (error) {
   console.log(error.message); // "AppStorage.push(): Value cannot be null or undefined"
 }
@@ -177,11 +196,17 @@ try {
 } catch (error) {
   console.log(error.message); // "AppStorage.push(): Value at key 'user' is not an array"
 }
+
+try {
+  AppStorage.update('user', '', 'value'); // Invalid subkey
+} catch (error) {
+  console.log(error.message); // "AppStorage.update(): SubKey cannot be an empty string"
+}
 ```
 
 ## TypeScript Support
 
-Full TypeScript support with interfaces and type definitions:
+Full TypeScript support with generics for enhanced type safety:
 
 ```typescript
 import AppStorage, { IAppStorage } from 'localstorage-extra';
@@ -191,9 +216,89 @@ interface User {
   age: number;
 }
 
-const user: User = AppStorage.get('user');
+// Type-safe operations with generics
+const user = AppStorage.get<User>('user'); // Returns User | null
+const users = AppStorage.get<User[]>('users'); // Returns User[] | null
+
+// Backwards compatible - defaults to 'any'
+const data = AppStorage.get('data'); // Returns any
+
+// Type-safe array operations
+AppStorage.set<User[]>('users', []);
+AppStorage.push<User>('users', { name: 'Alice', age: 30 });
+
+// Type-safe filtering
+const adults = AppStorage.getWhere<User>('users', user => user.age >= 18);
+```
+
+## Bundle Size
+
+Lightweight with zero runtime dependencies:
+- **Production bundle**: ~9.6KB compiled
+- **No lodash dependency** - uses optimized native implementations
+- **Tree-shakeable** - import only what you need
+
+### Storage Monitoring
+
+Monitor localStorage usage and quotas:
+
+```javascript
+// Get current storage size in bytes
+const bytes = AppStorage.size();
+console.log(`Using ${bytes} bytes`);
+
+// Get all localStorage keys
+const allKeys = AppStorage.keys();
+console.log('Stored keys:', allKeys);
+
+// Get detailed usage information with browser quota detection
+const usage = AppStorage.usage();
+console.log(`Storage: ${usage.used}/${usage.total} bytes (${usage.percentage}%)`);
+```
+
+### Cross-Tab Communication
+
+Listen for localStorage changes from other browser tabs:
+
+```javascript
+// Listen to all localStorage changes
+const cleanup = AppStorage.onChange((key, oldValue, newValue) => {
+  console.log(`${key} changed from`, oldValue, 'to', newValue);
+});
+
+// Listen to specific key changes only
+const userCleanup = AppStorage.onChange('user', (key, oldValue, newValue) => {
+  console.log('User data updated from another tab!');
+  // Update UI, sync state, etc.
+});
+
+// Clean up event listeners when done
+cleanup();
+userCleanup();
+```
+
+### Async/Promise Support
+
+Future-ready Promise-based API for async storage operations:
+
+```javascript
+// Promise-based operations
+await AppStorage.setAsync('user', userData);
+const user = await AppStorage.getAsync<User>('user');
+await AppStorage.updateAsync('user', 'lastLogin', new Date());
+await AppStorage.delAsync('user', 'tempData');
+
+// Perfect for async/await workflows
+async function saveUserPreferences(prefs) {
+  try {
+    await AppStorage.setAsync('preferences', prefs);
+    console.log('Preferences saved successfully');
+  } catch (error) {
+    console.error('Failed to save preferences:', error);
+  }
+}
 ```
 
 ## Browser Compatibility
 
-Works in all modern browsers that support localStorage. For Node.js environments, a localStorage polyfill is automatically detected and used if available.
+Works in all modern browsers that support localStorage. The library automatically detects browser storage quotas and caches the result for optimal performance.
