@@ -1,8 +1,16 @@
 {
   "name": "localstorage-extra",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "A lightweight, type-safe localStorage utility with advanced querying, filtering, cross-tab communication, and storage monitoring",
-  "keywords": ["localStorage", "storage", "browser", "typescript", "utility", "cross-tab", "events"],
+  "keywords": [
+    "localStorage",
+    "storage",
+    "browser",
+    "typescript",
+    "utility",
+    "cross-tab",
+    "events"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ianmin2/localstorage-extra.git"
